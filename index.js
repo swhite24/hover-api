@@ -145,12 +145,9 @@ module.exports = function (username, password) {
         if (_loggedin) return _hoverApiRequest(method, path, body, cb);
 
         // Issue login request with provided username / password
-        r({
+        r.post({
             uri: baseUrl + '/login',
-            body: 'username=' + username + '&password=' + password,
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
+            form: {username: username, password: password},
         }, _rCallback(function (err) {
             if (err) return cb(err);
 
