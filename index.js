@@ -11,7 +11,7 @@ var request = require('request'),
 module.exports = function (username, password) {
 
     // Base url for all hover api requests
-    var baseUrl = 'https://www.hover.com/api';
+    var baseUrl = 'https://www.hover.com/';
 
     // Captured from cookie in hover authentication request.
     var cookies = request.jar();
@@ -146,10 +146,11 @@ module.exports = function (username, password) {
 
         // Issue login request with provided username / password
         r({
-            uri: baseUrl + '/login',
-            body: 'username=' + username + '&password=' + password,
+            method: 'POST',
+            uri: baseUrl + '/signin',
+            body: {'username' : username , "password": password },
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/json;charset=UTF-8'
             }
         }, _rCallback(function (err) {
             if (err) return cb(err);
@@ -179,7 +180,7 @@ module.exports = function (username, password) {
         // Default options
         var options = {
             method: method,
-            uri: baseUrl + path
+            uri: baseUrl + '/api' + path
         };
 
         // Add body if provided
